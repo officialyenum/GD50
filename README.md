@@ -13,9 +13,9 @@ Look how easy it is to use:
 Features
 --------
 
-- assignment0 - Pong
-- assignment1 - Flappy Bird
-- assignment2 - Breakout
+- assignment0 - Pong - {completed}
+- assignment1 - Flappy Bird {completed}
+- assignment2 - Breakout {on-going}
 - assignment3 - Match 3
 - assignment4 - Super Mario Bros.
 - assignment5 - Legend of Zelda
