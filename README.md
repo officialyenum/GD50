@@ -1,4 +1,4 @@
-$GD50
+GD50
 ========
 
 Hello, world! This is CS50's Introduction to Game Development Solutions. 
@@ -32,7 +32,7 @@ Installation
 
 Install love and lua by running:
 
-    Link to Download LOVE2D https://love2d.org/#download
+    Link to Download LOVE2D https://www.love2d.org/#download
     Open GD50 IN terminal
     call any assignment directory : cd assignment0
     run project eith the followin command in the assignment directory: love .
@@ -40,8 +40,8 @@ Install love and lua by running:
 Contribute
 ----------
 
-- Issue Tracker: github.com/officialyenum/$GD50/issues
-- Source Code: github.com/officialyenum/$GD50
+- Issue Tracker: https://www.github.com/officialyenum/GD50/issues
+- Source Code: https://www.github.com/officialyenum/GD50
 
 Support
 -------
