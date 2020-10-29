@@ -16,6 +16,10 @@
 
 PlayState = Class{__includes = BaseState}
 
+--[[
+    We initialize what's in our PlayState via a state table that we pass between
+    states as we go from playing to serving.
+]]
 function PlayState:enter(params)
     self.paddle = params.paddle
     self.bricks = params.bricks
@@ -59,7 +63,7 @@ function PlayState:update(dt)
         if self.ball.x < self.paddle.x + (self.paddle.width / 2) and self.paddle.dx < 0 then
             self.ball.dx = -50 + -(8 * (self.paddle.x + self.paddle.width / 2 - self.ball.x))
         
-            -- else if we hit the paddle on its right side while moving right...
+        -- else if we hit the paddle on its right side while moving right...
         elseif self.ball.x > self.paddle.x + (self.paddle.width / 2) and self.paddle.dx > 0 then
             self.ball.dx = 50 + (8 * math.abs(self.paddle.x + self.paddle.width / 2 - self.ball.x))
         end
@@ -74,7 +78,7 @@ function PlayState:update(dt)
         if brick.inPlay and self.ball:collides(brick) then
 
             -- add to score
-            self.score = self.score + 10
+            self.score = self.score + (brick.tier * 200 + brick.color * 25)
 
             -- trigger the brick's hit function, which removes it from play
             brick:hit()
