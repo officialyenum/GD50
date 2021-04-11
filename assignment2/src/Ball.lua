@@ -4,8 +4,8 @@
 
     -- Ball Class --
 
-    Author: Colton Ogden
-    cogden@cs50.harvard.edu
+    Author: Opone Chukwuyenum
+    oponechukwuyenum@gmail.com
 
     Represents a ball which will bounce back and forth between the sides
     of the world space, the player's paddle, and the bricks laid out above

@@ -4,8 +4,8 @@
 
     -- ServeState Class --
 
-    Author: Colton Ogden
-    cogden@cs50.harvard.edu
+    Author: Opone Chukwuyenum
+    oponechukwuyenum@gmail.com
 
     The state in which we are waiting to serve the ball; here, we are
     basically just moving the paddle left and right with the ball until we
@@ -22,7 +22,9 @@ function ServeState:enter(params)
     self.bricks = params.bricks
     self.health = params.health
     self.score = params.score
+    self.highScores = params.highScores
     self.level = params.level
+    self.bonusLevel = params.bonusLevel
 
     -- init new ball (random color for fun)
     self.ball = Ball(1)
@@ -42,8 +44,10 @@ function ServeState:update(dt)
             bricks = self.bricks,
             health = self.health,
             score = self.score,
+            highScores = self.highScores,
             ball = self.ball,
-            level = self.level
+            level = self.level,
+            bonusLevel = self.bonusLevel
         })
     end
 
@@ -56,12 +60,17 @@ function ServeState:render()
     self.paddle:render()
     self.ball:render()
 
+
     for k, brick in pairs(self.bricks) do
         brick:render()
     end
 
     renderScore(self.score)
     renderHealth(self.health)
+
+    love.graphics.setFont(gFonts['large'])
+    love.graphics.printf('Level ' .. tostring(self.level), 0, VIRTUAL_HEIGHT / 3,
+        VIRTUAL_WIDTH, 'center')
 
     love.graphics.setFont(gFonts['medium'])
     love.graphics.printf('Press Enter to serve!', 0, VIRTUAL_HEIGHT / 2,

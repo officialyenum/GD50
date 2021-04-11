@@ -55,7 +55,9 @@ end
     we have to return a subset of GenerateQuads.
 ]]
 function GenerateQuadsBricks(atlas)
-    return table.slice(GenerateQuads(atlas, 32, 16), 1, 21)
+    local allBricks = table.slice(GenerateQuads(atlas, 32, 16), 1, 21)
+    table.insert(allBricks, love.graphics.newQuad(32*5,16*3, 32, 16, atlas:getDimensions()))
+    return allBricks
 end
 
 --[[
@@ -120,6 +122,22 @@ function GenerateQuadsBalls(atlas)
     for i = 0, 2 do
         quads[counter] = love.graphics.newQuad(x, y, 8, 8, atlas:getDimensions())
         x = x + 8
+        counter = counter + 1
+    end
+
+    return quads
+end
+
+function GenerateQuadsPowerUps(atlas)
+    local x = 0
+    local y = 192
+
+    local counter = 1
+    local quads = {}
+
+    for i = 0, 9 do
+        quads[counter] = love.graphics.newQuad(x, y, 16, 16, atlas:getDimensions())
+        x = x + 16
         counter = counter + 1
     end
 

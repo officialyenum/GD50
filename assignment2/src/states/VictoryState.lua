@@ -4,8 +4,8 @@
 
     -- StartState Class --
 
-    Author: Colton Ogden
-    cogden@cs50.harvard.edu
+    Author: Opone Chukwuyenum
+    oponechukwuyenum@gmail.com
 
     Represents the state that the game is in when we've just completed a level.
     Very similar to the ServeState, except here we increment the level 
@@ -16,6 +16,7 @@ VictoryState = Class{__includes = BaseState}
 function VictoryState:enter(params)
     self.level = params.level
     self.score = params.score
+    self.highScores = params.highScores
     self.paddle = params.paddle
     self.health = params.health
     self.ball = params.ball

@@ -2,8 +2,13 @@
     GD50
     Breakout Remake
 
-    Author: Colton Ogden
+    Original Author: Colton Ogden
     cogden@cs50.harvard.edu
+
+    Contributing Author: Opone Chukwuyenum
+    oponechukwuyenum@gmail.com
+
+    Modified to work with Love2d version 11.3b
 
     Originally developed by Atari in 1976. An effective evolution of
     Pong, Breakout ditched the two-player mechanic in favor of a single-
@@ -25,6 +30,7 @@
 ]]
 
 require 'src/Dependencies'
+require 'conf'
 
 --[[
     Called just once at the beginning of the game; used to set up
@@ -62,10 +68,12 @@ function love.load()
     -- Quads we will generate for all of our textures; Quads allow us
     -- to show only part of a texture and not the entire thing
     gFrames = {
+        ['arrows'] = GenerateQuads(gTextures['arrows'], 24, 24),
         ['paddles'] = GenerateQuadsPaddles(gTextures['main']),
         ['balls'] = GenerateQuadsBalls(gTextures['main']),
         ['bricks'] = GenerateQuadsBricks(gTextures['main']),
-        ['hearts'] = GenerateQuads(gTextures['hearts'], 10, 9)
+        ['hearts'] = GenerateQuads(gTextures['hearts'], 10, 9),
+        ['powerups'] = GenerateQuadsPowerUps(gTextures['main'])
     }
     
     -- initialize our virtual resolution, which will be rendered within our
@@ -93,7 +101,9 @@ function love.load()
         ['high-score'] = love.audio.newSource('sounds/high_score.wav', 'static'),
         ['pause'] = love.audio.newSource('sounds/pause.wav', 'static'),
 
-        ['music'] = love.audio.newSource('sounds/music.wav', 'static')
+        ['power'] = love.audio.newSource('sounds/recover.wav', 'static'),
+        ['music'] = love.audio.newSource('sounds/music.wav', 'static'),
+        ['locked'] = love.audio.newSource('sounds/hurt.wav', 'static')
     }
 
     -- the state machine we'll be using to transition between various states
@@ -112,9 +122,19 @@ function love.load()
         ['play'] = function() return PlayState() end,
         ['serve'] = function() return ServeState() end,
         ['game-over'] = function() return GameOverState() end,
-        ['victory'] = function() return VictoryState() end
+        ['victory'] = function() return VictoryState() end,
+        ['high-scores'] = function() return HighScoreState() end,
+        ['enter-high-score'] = function() return EnterHighScoreState() end,
+        ['paddle-select'] = function() return PaddleSelectState() end
     }
-    gStateMachine:change('start')
+    data = loadHighScores()
+    print(data[1].score);
+    gStateMachine:change('start', {
+        highScores = loadHighScores()
+    })
+    -- play our music outside of all states and set it to looping
+    gSounds['music']:play()
+    gSounds['music']:setLooping(true)
 
     -- a table we'll use to keep track of which keys have been pressed this
     -- frame, to get around the fact that LÖVE's default callback won't let us
@@ -203,9 +223,60 @@ function love.draw()
 end
 
 --[[
+    Loads high scores from a .lst file, saved in LÖVE2D's default save directory in a subfolder
+    called 'breakout'.
+]]
+function loadHighScores()
+    love.filesystem.setIdentity('breakout')
+
+    -- if the file doesn't exist, initialize it with some default scores
+    if not love.filesystem.getInfo('breakout.lst') then
+        local scores = ''
+        for i = 10, 1, -1 do
+            scores = scores .. 'CTO\n'
+            scores = scores .. tostring(i * 1000) .. '\n'
+        end
+
+        love.filesystem.write('breakout.lst', scores)
+    end
+
+    -- flag for whether we're reading a name or not
+    local name = true
+    local currentName = nil
+    local counter = 1
+
+    -- initialize scores table with at least 10 blank entries
+    local scores = {}
+
+    for i = 1, 10 do
+        -- blank table; each will hold a name and a score
+        scores[i] = {
+            name = nil,
+            score = nil
+        }
+    end
+
+    -- iterate over each line in the file, filling in names and scores
+    for line in love.filesystem.lines('breakout.lst') do
+        if name then
+            scores[counter].name = string.sub(line, 1, 3)
+        else
+            scores[counter].score = tonumber(line)
+            counter = counter + 1
+        end
+
+        -- flip the name flag
+        name = not name
+    end
+
+    return scores
+end
+
+--[[
     Renders hearts based on how much health the player has. First renders
     full hearts, then empty hearts for however much health we're missing.
 ]]
+
 function renderHealth(health)
     -- start of our health rendering
     local healthX = VIRTUAL_WIDTH - 100

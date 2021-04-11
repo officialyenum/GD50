@@ -4,8 +4,8 @@
 
     -- LevelMaker Class --
 
-    Author: Colton Ogden
-    cogden@cs50.harvard.edu
+    Author: Opone Chukwuyenum
+    oponechukwuyenum@gmail.com
 
     Creates randomized levels for our Breakout game. Returns a table of
     bricks that the game can render, based on the current level we're at
@@ -16,6 +16,8 @@
 NONE = 1
 SINGLE_PYRAMID = 2
 MULTI_PYRAMID = 3
+
+LOCK_PROBABILITY = 5 -- Assignment2: 5% Probability of locked bricks
 
 -- per-row patterns
 SOLID = 1           -- all colors the same in this row
@@ -83,7 +85,9 @@ function LevelMaker.createMap(level)
                 -- flip the flag to true on an iteration we don't use it
                 skipFlag = not skipFlag
             end
-
+            -- Assignment 2: Brick Lock
+            -- generate random locked bricks
+            local lockedBricks = math.random(0,100) < LOCK_PROBABILITY and true or false
             b = Brick(
                 -- x-coordinate
                 (x-1)                   -- decrement x by 1 because tables are 1-indexed, coords are 0
@@ -92,7 +96,8 @@ function LevelMaker.createMap(level)
                 + (13 - numCols) * 16,  -- left-side padding for when there are fewer than 13 columns
                 
                 -- y-coordinate
-                y * 16                  -- just use y * 16, since we need top padding anyway
+                y * 16,                  -- just use y * 16, since we need top padding anyway
+                lockedBricks            -- pass whether brick lock is true or false
             )
 
             -- if we're alternating, figure out which color/tier we're on

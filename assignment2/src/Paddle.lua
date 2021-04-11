@@ -4,8 +4,8 @@
 
     -- Paddle Class --
 
-    Author: Colton Ogden
-    cogden@cs50.harvard.edu
+    Author: Opone Chukwuyenum
+    oponechukwuyenum@gmail.com
 
     Represents a paddle that can move left and right. Used in the main
     program to deflect the ball toward the bricks; if the ball passes
@@ -19,7 +19,7 @@ Paddle = Class{}
     Our Paddle will initialize at the same spot every time, in the middle
     of the world horizontally, toward the bottom.
 ]]
-function Paddle:init()
+function Paddle:init(skin)
     -- x is placed in the middle
     self.x = VIRTUAL_WIDTH / 2 - 32
 
@@ -35,7 +35,7 @@ function Paddle:init()
 
     -- the skin only has the effect of changing our color, used to offset us
     -- into the gPaddleSkins table later
-    self.skin = 1
+    self.skin = skin
 
     -- the variant is which of the four paddle sizes we currently are; 2
     -- is the starting size, as the smallest is too tough to start with
@@ -65,6 +65,14 @@ function Paddle:update(dt)
     else
         self.x = math.min(VIRTUAL_WIDTH - self.width, self.x + self.dx * dt)
     end
+end
+
+-- Paddle Growth Solution here
+function Paddle:resize(newsize)
+    -- default size was 2
+    self.size = newsize
+    -- default size was 64
+    self.width = newsize * 32
 end
 
 --[[
