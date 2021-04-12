@@ -90,10 +90,13 @@ end
 ]]
     -- Assignment 2 : locked Brick Solution
     -- Assignment 2 : pass key used in breaking locked bricks if any
-function Brick:hit(key)
+function Brick:hit(unlock)
     -- Assignment 2 : locked Brick Solution
     -- Assignment 2 : check if the player has the powerup to break a locked brick
-    if self.locked and key then
+    print("brick hit")
+    print(self.locked)
+    print(unlock)
+    if self.locked and unlock then
         self.psystem:setColors(
             paletteColors[self.color].r,
             paletteColors[self.color].g,
@@ -109,6 +112,23 @@ function Brick:hit(key)
         gSounds['brick-hit-2']:stop()
         gSounds['brick-hit-2']:play()
         self.locked = false
+
+        -- if we're at a higher tier than the base, we need to go down a tier
+        -- if we're already at the lowest color, else just go down a color
+        if self.tier > 0 then
+            if self.color == 1 then
+                self.tier = self.tier - 1
+                self.color = 5
+            else
+                self.color = self.color - 1
+            end
+        end
+
+        -- play a second layer sound if the brick is destroyed
+        if not self.inPlay then
+            gSounds['brick-hit-1']:stop()
+            gSounds['brick-hit-1']:play()
+        end
     else if self.locked then
         gSounds['locked']:play()
     else

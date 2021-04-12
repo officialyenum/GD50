@@ -32,7 +32,7 @@ function PlayState:enter(params)
     self.numballs = 1
 
     self.level = params.level
-    self.bonusLevel = 5000
+    self.bonusLevel = 10000
 
     -- give ball random starting velocity
     self.balls[1].dx = math.random(-200, 200)
@@ -129,8 +129,13 @@ function PlayState:update(dt)
                 if powerup:collides(self.paddle) then
                     gSounds['power']:play()
                     if powerup.type < 10 then
-                        -- add extra ball
-                        self:bonusBalls()
+                        if powerup.type == 3 then
+                            -- increase health by one and do not exceed three
+                            self.health = math.min(3, self.health + 1)
+                        else
+                            -- add extra ball
+                            self:bonusBalls()
+                        end
                     end
                     if powerup.type == 10 then
                         self.key = true
@@ -150,23 +155,22 @@ function PlayState:update(dt)
                 if brick.inPlay and ball:collides(brick) then
                     -- Assignment 2: Block Unlock
                     if self.key and brick.locked then
-                        self.score = self.score + 5000
+                        self.score = self.score + 200
+                        -- trigger the brick's hit function, which removes it from play
+                        brick:hit(self.key)
                     else if brick.locked then
                         -- do nothing
                     else
                         -- add to score
-                        self.score = self.score + (brick.tier * 200 + brick.color * 25)
+                        self.score = self.score + (brick.tier * 200 + brick.color * 25)-- trigger the brick's hit function, which removes it from play
+                        brick:hit(self.key)
                     end
-
-                    
-                    -- trigger the brick's hit function, which removes it from play
-                    brick:hit(self.key)
 
                     if self.score > self.bonusLevel then
                         -- increase health by one and do not exceed three
                         self.health = math.min(3, self.health + 1)
 
-                        -- multiply bonus Level by 2 and do not allow bonus level to go above 200000
+                        -- multiply bonus Level by 2 and do not allow bonus level to go above 100000
                         self.bonusLevel = math.min(100000, self.bonusLevel * 2)
 
                         -- increase paddle size
