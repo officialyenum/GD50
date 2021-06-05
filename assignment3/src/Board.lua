@@ -182,14 +182,14 @@ function Board:checkForMatches()
     end
 
     -- check last row matches
-    for y = 1, 7 do
+    for x = 1, 7 do
         if self:swapTwoTilesAndCheckForMatch(8, x, 8, x + 1) then
             return true
         end
     end
 
     -- check last column matches
-    for x = 1, 7 do
+    for y = 1, 7 do
         if self:swapTwoTilesAndCheckForMatch(y, 8, y + 1, 8) then
             return true
         end
