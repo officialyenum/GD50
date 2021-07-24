@@ -32,7 +32,7 @@ function PlayState:enter(params)
     self.numballs = 1
 
     self.level = params.level
-    self.bonusLevel = 10000
+    self.bonusLevel = 2000
 
     -- give ball random starting velocity
     self.balls[1].dx = math.random(-200, 200)
@@ -155,14 +155,14 @@ function PlayState:update(dt)
                 if brick.inPlay and ball:collides(brick) then
                     -- Assignment 2: Block Unlock
                     if self.key and brick.locked then
-                        self.score = self.score + 200
+                        self.score = self.score + 500
                         -- trigger the brick's hit function, which removes it from play
                         brick:hit(self.key)
                     else if brick.locked then
                         -- do nothing
                     else
                         -- add to score
-                        self.score = self.score + (brick.tier * 200 + brick.color * 25)-- trigger the brick's hit function, which removes it from play
+                        self.score = self.score + (brick.tier * 500 + brick.color * 50)-- trigger the brick's hit function, which removes it from play
                         brick:hit(self.key)
                     end
 

@@ -20,13 +20,17 @@ function Board:init(x, y, level)
     -- Assignment solution 2 add level here
     self.level = level
 
+    print("Board class : line 23 init self.level : ",self.level)
+    print("Board class : line 24 init level : ",level)
+
     self:initializeTiles()
 end
 
 function Board:initializeTiles()
-    print()
+    print("Board class: line 30 initialize tiles self.level : ",self.level)
     self.tiles = {}
 
+    -- check if level is undefined or nil assign 1 to it
     if self.level == nil then
         self.level = 1
     end
@@ -37,12 +41,17 @@ function Board:initializeTiles()
         table.insert(self.tiles, {})
 
         for tileX = 1, 8 do
+            -- check if level is undefined or nil assign 1 to it
+            -- if level = nil then
+            --     level = 1
+            -- end
             -- create a new tile at X,Y with a random color and variety based on level
-            if self.level == 1 then
-                table.insert(self.tiles[tileY], Tile(tileX, tileY, math.random(18), 1))
-            else
-                table.insert(self.tiles[tileY], Tile(tileX, tileY, math.random(18), math.random(6)))
-            end
+            table.insert(self.tiles[tileY], Tile(tileX, tileY, math.random(16), math.random(math.min(self.level, 6))))
+            -- if level == 1 then
+            --     table.insert(self.tiles[tileY], Tile(tileX, tileY, math.random(16), 1))
+            -- else
+            --     table.insert(self.tiles[tileY], Tile(tileX, tileY, math.random(16), math.random(math.min(level, 6))))
+            -- end
         end
     end
 
@@ -64,11 +73,15 @@ function Board:calculateMatches()
     -- how many of the same color blocks in a row we've found
     local matchNum = 1
 
+
     -- horizontal matches first
     for y = 1, 8 do
         local colorToMatch = self.tiles[y][1].color
 
         matchNum = 1
+
+        -- shiny Tile checker
+        local shinyTileChecker = false
         
         -- every horizontal tile
         for x = 2, 8 do
@@ -83,11 +96,32 @@ function Board:calculateMatches()
                 if matchNum >= 3 then
                     local match = {}
 
-                    -- go backwards from here by matchNum
+                    -- loop through the 3 tiles to check for a shiny tile
                     for x2 = x - 1, x - matchNum, -1 do
-                        -- add each tile to the match that's in that match
-                        table.insert(match, self.tiles[y][x2])
+                        -- if a shiny tile is detected change the shinyTileChecker TO TRUE
+                        if self:isShinyTile(self.tiles[y][x2]) then
+                            shinyTileChecker = true
+                            break
+                        end
                     end
+
+                    print('line 108 shiny tile is :', shinyTileChecker)
+
+                    -- check if shiny tile is in matched rows
+                    if shinyTileChecker then
+                        --add entire row to match
+                        for i = 1, 8 do
+                            table.insert(match, self.tiles[y][i])
+                        end
+                    else
+                        -- loop through the 3 matched tiles
+                        for x2 = x - 1, x - matchNum, -1 do
+                            -- add each tile to the match
+                            table.insert(match, self.tiles[y][x2])
+                        end
+                    end
+                    -- return shiny tile checker to false after removing rows
+                    shinyTileChecker = false
 
                     -- add this match to our total matches table
                     table.insert(matches, match)
@@ -108,12 +142,34 @@ function Board:calculateMatches()
             
             -- go backwards from end of last row by matchNum
             for x = 8, 8 - matchNum + 1, -1 do
+                -- if a shiny tile is detected change the shinyTileChecker TO TRUE
+                if self.tiles[y][x].shiny then
+                    shinyTileChecker = true
+                    break
+                end
+            end
+            print('line 149 shiny tile is :', shinyTileChecker)
+
+            -- check if shiny tile is in matched rows
+            if shinyTileChecker then
+                --add entire row to match
+                for i = 1, 8 do
+                    table.insert(match, self.tiles[y][i])
+                end
+            else
+                -- loop through the 3 matched tiles
+                for x = 8, 8 - matchNum + 1, -1 do
+                    -- add each tile to the match
                 table.insert(match, self.tiles[y][x])
+                end
             end
 
             table.insert(matches, match)
         end
     end
+
+    -- reset shiny Tile checker to false for checking vertical matches
+    shinyTileChecker = false
 
     -- vertical matches
     for x = 1, 8 do
@@ -132,8 +188,25 @@ function Board:calculateMatches()
                     local match = {}
 
                     for y2 = y - 1, y - matchNum, -1 do
-                        table.insert(match, self.tiles[y2][x])
+                        if self:isShinyTile(self.tiles[y2][x]) then
+                            shinyTileChecker = true
+                        end
                     end
+                    print('line 192 shiny tile is :', shinyTileChecker)
+
+                    -- if any tile is shiny, match all 8 columns else match only three columns
+                    if shinyTileChecker then
+                        for i = 1, 8 do
+                            table.insert(match, self.tiles[i][x])
+                        end
+                    else
+                        for y2 = y - 1, y - matchNum, -1 do
+                            table.insert(match, self.tiles[y2][x])
+                        end
+                    end
+
+                    -- return shiny tile checker to false after removing columns
+                    shinyTileChecker = false
 
                     table.insert(matches, match)
                 end
@@ -151,11 +224,25 @@ function Board:calculateMatches()
         if matchNum >= 3 then
             local match = {}
             
-            -- go backwards from end of last row by matchNum
+            -- go backwards from end of last column by matchNum
             for y = 8, 8 - matchNum, -1 do
-                table.insert(match, self.tiles[y][x])
+                if self:isShinyTile(self.tiles[y][x]) then
+                    shinyTileChecker = true
+                end
             end
 
+            -- if any tile is shiny, match all 8 columns else match only three columns
+            if shinyTileChecker then
+                for i = 1, 8 do
+                    table.insert(match, self.tiles[i][x])
+                end
+            else
+                for y = 8, 8 - matchNum, -1 do
+                    table.insert(match, self.tiles[y][x])
+                end
+            end
+
+            shinyTileChecker = false
             table.insert(matches, match)
         end
     end
@@ -165,6 +252,10 @@ function Board:calculateMatches()
 
     -- return matches table if > 0, else just return false
     return #self.matches > 0 and self.matches or false
+end
+
+function Board:isShinyTile(tile)
+    return tile.shine
 end
 
 function Board:checkForMatches()
@@ -322,15 +413,12 @@ function Board:getFallingTiles()
 
             -- if the tile is nil, we need to add a new one
             if not tile then
-                -- local tile
-                if self.level == 1 then
-                    tile = Tile(x, y, math.random(18), 1)
-                else
-                    tile = Tile(x, y, math.random(18), math.random(6))
-                end
+                -- new tile with random color and variety
+                local tile = Tile(x, y, math.random(16), math.random(math.min(self.level, 6)))
                 tile.y = -32
+                -- re-insert it into the tiles
                 self.tiles[y][x] = tile
-
+                -- tween for tiles to fall down
                 tweens[tile] = {
                     y = (tile.gridY - 1) * 32
                 }

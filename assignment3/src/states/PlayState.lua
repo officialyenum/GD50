@@ -20,7 +20,7 @@ PlayState = Class{__includes = BaseState}
 
 function PlayState:init()
     -- start our transition alpha at full, so we fade in
-    self.transitionAlpha = 255
+    self.transitionAlpha = 1
 
     -- position in the grid which we're highlighting
     self.boardHighlightX = 0
@@ -55,18 +55,21 @@ function PlayState:init()
 end
 
 function PlayState:enter(params)
-    print(params.level)
+    -- print(params.level)
     -- grab level # from the params we're passed
     self.level = params.level
+    print('Playstate line 61: self.level',self.level)
+
 
     -- spawn a board and place it toward the right
     self.board = params.board or Board(VIRTUAL_WIDTH - 272, 16, self.level)
+    -- self.board = Board(VIRTUAL_WIDTH - 272, 16, self.level)
 
     -- grab score from params if it was passed
     self.score = params.score or 0
 
     -- score we have to reach to get to the next level
-    self.scoreGoal = self.level * 1.25 * 1000
+    self.scoreGoal = self.level * 1.25 * 2000
 end
 
 function PlayState:update(dt)
@@ -155,6 +158,20 @@ function PlayState:update(dt)
 
                 self.board.tiles[newTile.gridY][newTile.gridX] = newTile
 
+                --- NO SWAP CHECKER STARTS HERE
+                -- tween coordinates between the two so they swap
+                -- Timer.tween(0.1, {
+                --     [self.highlightedTile] = {x = newTile.x, y = newTile.y},
+                --     [newTile] = {x = self.highlightedTile.x, y = self.highlightedTile.y}
+                -- })
+                -- -- once the swap is finished, we can tween falling blocks as needed
+                -- :finish(function()
+                --     self:calculateMatches()
+                -- end
+                -- )
+                -- NO SWAP CHECKER ENDS HERE
+
+                -- SWAP CHECKER STARTS HERE
                 --  if calculateMatch returns true go ahead to calculate match 
                 if self.board:calculateMatches() ~= false then
                     -- tween coordinates between the two so they swap
@@ -165,7 +182,7 @@ function PlayState:update(dt)
                     -- once the swap is finished, we can tween falling blocks as needed
                     :finish(function()
                         self:calculateMatches()
-    
+
                         -- check if the entire board has no possible match then initialize the board 
                         if self.board:checkForMatches() == false then
                             self.board:initializeTiles()
@@ -180,7 +197,7 @@ function PlayState:update(dt)
 
                     self.highlightedTile.gridX = newTile.gridX
                     self.highlightedTile.gridY = newTile.gridY
-                    
+
                     newTile.gridX = tempX
                     newTile.gridY = tempY
 
@@ -191,6 +208,7 @@ function PlayState:update(dt)
                     gSounds["error"]:play()
                     self.highlightedTile = nil
                 end
+                -- SWAP CHECKER ENDS HERE
             end
         end
     end
@@ -216,7 +234,8 @@ function PlayState:calculateMatches()
 
         -- add score for each match
         for k, match in pairs(matches) do
-            self.score = self.score + #match * 50
+            print('self score: ',self.score + #match * 100);
+            self.score = self.score + #match * 100
             -- Assignment Solution: Add 1 second per matched tile
             self.timer = self.timer + 1
         end

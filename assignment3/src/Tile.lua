@@ -27,8 +27,8 @@ function Tile:init(x, y, color, variety)
     self.variety = variety
 
     -- 5 % chance of getting a shiny tile
-    self.shine = math.random(1, 100) < 5
-    print('shine status: ',self.shine)
+    self.shine = math.random(1, 100) < 50
+    -- print('shine status: ',self.shine)
     
 end
 
