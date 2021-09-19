@@ -63,8 +63,8 @@ function Tile:render(x, y)
             'fill', 
             (self.gridX - 1) * 32 + (VIRTUAL_WIDTH - 272),
             (self.gridY - 1) * 32 + 16, 
-            32, 
-            32, 
+            16, 
+            16, 
             4
         )
         -- back to alpha

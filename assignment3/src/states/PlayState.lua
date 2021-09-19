@@ -36,7 +36,7 @@ function PlayState:init()
     self.highlightedTile = nil
 
     self.score = 0
-    self.timer = 60
+    self.timer = 120
 
     -- set our Timer class to turn cursor highlight on and off
     Timer.every(0.5, function()

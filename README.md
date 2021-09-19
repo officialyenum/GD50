@@ -15,11 +15,11 @@ Features
 
 - assignment0 - Pong - {completed}
 - assignment1 - Flappy Bird {completed}
-- assignment2 - Breakout {on-going}
-- assignment3 - Match 3
-- assignment4 - Super Mario Bros.
-- assignment5 - Legend of Zelda
-- assignment6 - Angry Birds
+- assignment2 - Breakout {completed}
+- assignment3 - Match 3 {completed}
+- assignment4 - Super Mario Bros. {completed}
+- assignment5 - Legend of Zelda {completed}
+- assignment6 - Angry Birds {ongoing}
 - assignment7 - Pokémon
 - assignment8 - 3D Helicopter Game
 - assignment9 - Dreadhalls
