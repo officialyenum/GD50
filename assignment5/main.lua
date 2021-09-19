@@ -7,6 +7,7 @@
 ]]
 
 require 'src/Dependencies'
+require 'conf'
 
 function love.load()
     math.randomseed(os.time())
