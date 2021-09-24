@@ -84,9 +84,9 @@ function PlayerCarryPotState:render()
         math.floor(self.player.x - self.player.offsetX), math.floor(self.player.y - self.player.offsetY))
 
     -- debug for player and hurtbox collision rects
-    love.graphics.setColor(255, 0, 255, 255)
+    love.graphics.setColor(1, 0, 1, 1)
     love.graphics.rectangle('line', self.player.x, self.player.y, self.player.width, self.player.height)
     love.graphics.rectangle('line', self.potHitbox.x, self.potHitbox.y,
         self.potHitbox.width, self.potHitbox.height)
-    love.graphics.setColor(255, 255, 255, 255)
+    love.graphics.setColor(1, 1, 1, 1)
 end

@@ -19,8 +19,8 @@ Features
 - assignment3 - Match 3 {completed}
 - assignment4 - Super Mario Bros. {completed}
 - assignment5 - Legend of Zelda {completed}
-- assignment6 - Angry Birds {ongoing}
-- assignment7 - Pokémon
+- assignment6 - Angry Birds {completed}
+- assignment7 - Pokémon {ongoing}
 - assignment8 - 3D Helicopter Game
 - assignment9 - Dreadhalls
 - assignment10 - Portal
