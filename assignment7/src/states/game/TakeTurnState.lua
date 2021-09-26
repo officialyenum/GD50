@@ -3,7 +3,9 @@
     Pokemon
 
     Author: Colton Ogden
+    Modified: Chukwuyenum Opone
     cogden@cs50.harvard.edu
+    oponechukwuyenum@gmail.com
 ]]
 
 TakeTurnState = Class{__includes = BaseState}
@@ -212,11 +214,29 @@ function TakeTurnState:victory()
 
                         -- set our exp to whatever the overlap is
                         self.playerPokemon.currentExp = self.playerPokemon.currentExp - self.playerPokemon.expToLevel
+                        -- local oldHP = self.playerPokemon.baseHP
+                        -- local noldBaseAttack = self.playerPokemon.baseAttack
+                        -- local oldBaseDefense = self.playerPokemon.baseDefense
+                        -- local oldBaseSpeed = self.playerPokemon.baseSpeed
+                        -- print('Old HP',newHP)
+                        -- print('Old ATTACK',newBaseAttack)
+                        -- print('Old DEFENCE',newBaseDefense)
+                        -- print('Old SPEED',newBaseSpeed)
+
                         self.playerPokemon:levelUp()
+
+                        -- local newHP = self.playerPokemon.baseHP
+                        -- local newBaseAttack = self.playerPokemon.baseAttack
+                        -- local newBaseDefense = self.playerPokemon.baseDefense
+                        -- local newBaseSpeed = self.playerPokemon.baseSpeed
+                        -- print('New HP',newHP)
+                        -- print('New ATTACK',newBaseAttack)
+                        -- print('New DEFENCE',newBaseDefense)
+                        -- print('New SPEED',newBaseSpeed)
 
                         gStateStack:push(BattleMessageState('Congratulations! Level Up!',
                         function()
-                            self:fadeOutWhite()
+                            gStateStack:push(LevelUpMenuState(self.battleState))
                         end))
                     else
                         self:fadeOutWhite()
@@ -230,7 +250,7 @@ end
 function TakeTurnState:fadeOutWhite()
     -- fade in
     gStateStack:push(FadeInState({
-        r = 255, g = 255, b = 255
+        r = 1, g = 1, b = 1
     }, 1, 
     function()
 
@@ -241,7 +261,7 @@ function TakeTurnState:fadeOutWhite()
         -- pop off the battle state
         gStateStack:pop()
         gStateStack:push(FadeOutState({
-            r = 255, g = 255, b = 255
+            r = 1, g = 1, b = 1
         }, 1, function() end))
     end))
 end

@@ -34,7 +34,7 @@ function BattleState:init(player)
         y = VIRTUAL_HEIGHT - 80,
         width = 152,
         height = 6,
-        color = {r = 189, g = 32, b = 32},
+        color = {r = 189/255, g = 32/255, b = 32/255},
         value = self.player.party.pokemon[1].currentHP,
         max = self.player.party.pokemon[1].HP
     }
@@ -44,7 +44,7 @@ function BattleState:init(player)
         y = 8,
         width = 152,
         height = 6,
-        color = {r = 189, g = 32, b = 32},
+        color = {r = 189/255, g = 32/255, b = 32/255},
         value = self.opponent.party.pokemon[1].currentHP,
         max = self.opponent.party.pokemon[1].HP
     }

@@ -34,7 +34,7 @@ end
 function StartState:update(dt)
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
         gStateStack:push(FadeInState({
-            r = 1, g = 1, b = 1
+            r = 255, g = 255, b = 255
         }, 1,
         function()
             gSounds['intro-music']:stop()
@@ -49,7 +49,7 @@ function StartState:update(dt)
                 "Good luck! (Press Enter to dismiss dialogues)"
             ))
             gStateStack:push(FadeOutState({
-                r = 1, g = 1, b = 1
+                r = 255, g = 255, b = 255
             }, 1,
             function() end))
         end))
