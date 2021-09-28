@@ -13,18 +13,18 @@ Look how easy it is to use:
 Features
 --------
 
-- assignment0 - Pong - {completed}
-- assignment1 - Flappy Bird {completed}
-- assignment2 - Breakout {completed}
-- assignment3 - Match 3 {completed}
-- assignment4 - Super Mario Bros. {completed}
-- assignment5 - Legend of Zelda {completed}
-- assignment6 - Angry Birds {completed}
-- assignment7 - Pokémon {ongoing}
-- assignment8 - 3D Helicopter Game
-- assignment9 - Dreadhalls
-- assignment10 - Portal
-- assignment11 - Portal Problems
+- assignment0 - Pong - {completed} - Love2d & Lua
+- assignment1 - Flappy Bird {completed} - Love2d & Lua
+- assignment2 - Breakout {completed} - Love2d & Lua
+- assignment3 - Match 3 {completed} - Love2d & Lua
+- assignment4 - Super Mario Bros. {completed} - Love2d & Lua
+- assignment5 - Legend of Zelda {completed} - Love2d & Lua
+- assignment6 - Angry Birds {completed} - Love2d & Lua 
+- assignment7 - Pokémon {completed} - Love2d & Lua
+- assignment8 - 3D Helicopter Game {ongoing} - Unity & C#
+- assignment9 - Dreadhalls {pending} - Unity & C#
+- assignment10 - Portal {pending} - Unity & C#
+- assignment11 - Portal Problems {pending} - Unity & C#
 - Final Project - 
 
 Installation
