@@ -23,7 +23,7 @@ public class GameOverText : MonoBehaviour {
 			coins = helicopter.GetComponent<HeliController>().coinTotal;
 		}
 		else {
-
+			SkyscraperSpawner.speed = 0f;
 			// reveal text only when helicopter is null (destroyed)
 			text.color = new Color(0, 0, 0, 1);
 			text.text = "Game Over\nYour Score:\n" + coins + " Coins\nPress Space to Restart!";
@@ -31,6 +31,7 @@ public class GameOverText : MonoBehaviour {
 			// jump is space bar by default
 			if (Input.GetButtonDown("Jump")) {
 
+				SkyscraperSpawner.speed = 10f;
 				// reload entire scene, starting music over again, refreshing score, etc.
 				SceneManager.LoadScene("Main");
 			}
