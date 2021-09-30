@@ -55,11 +55,20 @@ public class LevelGenerator : MonoBehaviour {
 
 					// flag as placed so we never consider placing again
 					characterPlaced = true;
+					// create floor and ceiling
+					CreateChildPrefab(floorPrefab, floorParent, x, 0, z);
+				} else {
+					// if hole do not create floor
+					// 10% probability that a hole appears
+					int holeProbability = (int)(Random.Range(1, 10));
+					if (holeProbability == 5) //holeProbability picks 5
+					{
+						//do nothing
+					} else {
+						CreateChildPrefab(floorPrefab, floorParent, x, 0, z);
+					}
 				}
-
-				// create floor and ceiling
-				CreateChildPrefab(floorPrefab, floorParent, x, 0, z);
-
+				
 				if (generateRoof) {
 					CreateChildPrefab(ceilingPrefab, wallsParent, x, 4, z);
 				}
