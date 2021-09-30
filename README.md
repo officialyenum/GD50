@@ -21,9 +21,9 @@ Features
 - assignment5 - Legend of Zelda {completed} - Love2d & Lua
 - assignment6 - Angry Birds {completed} - Love2d & Lua 
 - assignment7 - Pokémon {completed} - Love2d & Lua
-- assignment8 - 3D Helicopter Game {ongoing} - Unity & C#
-- assignment9 - Dreadhalls {pending} - Unity & C#
-- assignment10 - Portal {pending} - Unity & C#
+- assignment8 - 3D Helicopter Game {completed} - Unity & C#
+- assignment9 - Dreadhalls {completed} - Unity & C#
+- assignment10 - Portal {ongoing} - Unity & C#
 - assignment11 - Portal Problems {pending} - Unity & C#
 - Final Project - 
 

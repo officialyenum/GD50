@@ -31,7 +31,7 @@ public class LevelGenerator : MonoBehaviour {
 	private bool[,] mapData;
 
 	// we use these to dig through our maze and to spawn the pickup at the end
-	private int mazeX = 4, mazeY = 1;
+	private int mazeX = 4, mazeY = 1, countHole = 1;
 
 	// Use this for initialization
 	void Start () {
@@ -61,9 +61,10 @@ public class LevelGenerator : MonoBehaviour {
 					// if hole do not create floor
 					// 10% probability that a hole appears
 					int holeProbability = (int)(Random.Range(1, 10));
-					if (holeProbability == 5) //holeProbability picks 5
+					if (holeProbability == 5 && countHole < 5) //holeProbability picks 5 and generates less than 5
 					{
 						//do nothing
+						countHole++;
 					} else {
 						CreateChildPrefab(floorPrefab, floorParent, x, 0, z);
 					}
