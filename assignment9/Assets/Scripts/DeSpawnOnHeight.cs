@@ -33,7 +33,7 @@ public class DeSpawnOnHeight : MonoBehaviour
             //remove audio
 			Destroy(gameOverAudioSource);
             //reset level to 0
-			LevelText.level = 0;
+			LevelText.level = 1;
             // set destroy instance
 			DontDestroy.instance = null;
             // load gameover scene

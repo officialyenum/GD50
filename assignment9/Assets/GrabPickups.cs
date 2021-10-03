@@ -8,7 +8,7 @@ public class GrabPickups : MonoBehaviour {
 	private AudioSource pickupSoundSource;
 
 	void Awake() {
-		pickupSoundSource = GetComponents<AudioSource>()[1];
+		pickupSoundSource = DontDestroy.instance.GetComponents<AudioSource>()[1];
 	}
 
 	void OnControllerColliderHit(ControllerColliderHit hit) {
@@ -16,8 +16,7 @@ public class GrabPickups : MonoBehaviour {
 			Destroy(hit.gameObject);
 			pickupSoundSource.Play();
 			// increase level by 1 
-			Debug.Log("Grab Pickup Line 18 Level :"+ LevelText.level);
-			LevelText.level += 1;
+			LevelText.level++;
 			// LevelText.addOne();
             SceneManager.LoadScene("Play");
 		}
