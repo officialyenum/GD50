@@ -8,7 +8,7 @@ public class GrabPickups : MonoBehaviour {
 	private AudioSource pickupSoundSource;
 
 	void Awake() {
-		pickupSoundSource = DontDestroy.instance.GetComponents<AudioSource>()[1];
+		pickupSoundSource = GetComponents<AudioSource>()[1];
 	}
 
 	void OnControllerColliderHit(ControllerColliderHit hit) {
