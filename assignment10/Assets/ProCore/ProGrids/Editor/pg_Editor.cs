@@ -531,7 +531,7 @@ namespace ProGrids
 
 			SceneView.onSceneGUIDelegate -= OnSceneGUI;
 			EditorApplication.update -= Update;
-			EditorApplication.hierarchyWindowChanged -= HierarchyWindowChanged;
+			EditorApplication.hierarchyChanged -= HierarchyWindowChanged;
 
 			instance = null;
 
