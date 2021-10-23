@@ -23,7 +23,7 @@ Features
 - assignment7 - Pokémon {completed} - Love2d & Lua
 - assignment8 - 3D Helicopter Game {completed} - Unity & C#
 - assignment9 - Dreadhalls {completed} - Unity & C#
-- assignment10 - Portal {ongoing} - Unity & C#
+- assignment10 - Portal {completed} - Unity & C#
 - assignment11 - Portal Problems {pending} - Unity & C#
 - Final Project - 
 
